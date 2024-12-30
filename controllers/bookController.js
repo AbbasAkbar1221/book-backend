@@ -33,8 +33,6 @@ async function getAllBooks (req, res) {
     console.log(req.body);
   
     try {
-      // const acknowledgement = await Book.create(req.body);
-      // res.json(acknowledgement);
   
       const newBook = new Book(req.body);
       const book = await newBook.save();
@@ -57,15 +55,21 @@ async function getAllBooks (req, res) {
   
   
     try {
-      let result = await Book.findByIdAndUpdate(req.params.id, req.body,
-          {
-              new: true
-          }
-      );
-      res.json(result);
+    
+      let updatedBook = await Book.findOneAndUpdate(
+        {title: req.params.title},
+        req.body,
+        {new : true}
+      )
+
+      if (!updatedBook) {
+        return res.status(404).json({ message: "Book not found" });
+      }
+
+      res.status(200).json(updatedBook);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Unable to modify book data" });
+      res.status(500).json({ message: "Unable to update book data" });
       return;
     }
   }
@@ -76,12 +80,22 @@ async function getAllBooks (req, res) {
     console.log("Deleting:", req.params.id);
   
     try {
-      const book = await Book.findByIdAndDelete(req.params.id);
-      res.json(book);
+      await Book.findOneAndDelete({title: req.params.title});
+      res.status(200).json({ message: "Delete Successful" });
     } catch (error) {
       console.error(err);
       res.status(500).json({ message: "Unable to delete book data" });
       return 
+    }
+  }
+
+  async function getBooksByGenre(req, res){
+    try {
+      const bookByGenre = await Book.find({genre: req.params.genre})
+      res.status(200).json(bookByGenre)
+    } catch (error) {
+      console.error(error)
+      res.json({message: "Unable to filter list using genre"})
     }
   }
 
@@ -90,5 +104,6 @@ async function getAllBooks (req, res) {
     getBookById,
     postBookData,
     updateBookData,
-    deleteBookData
+    deleteBookData,
+    getBooksByGenre
   }

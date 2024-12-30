@@ -8,6 +8,7 @@ const {
   postBookData,
   updateBookData,
   deleteBookData,
+  getBooksByGenre,
 } = require("../controllers/bookController");
 
 
@@ -17,8 +18,9 @@ router.get("/:id", getBookById);
 
 router.post("/", postBookData);
 
-router.patch("/:id", updateBookData);
+router.put("/:title", updateBookData);
 
-router.delete("/:id", deleteBookData);
+router.delete("/:title", deleteBookData);
 
+router.get('/genre/:genre', getBooksByGenre)
 module.exports = router;
