@@ -2,9 +2,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require("express");
-const db = require('./connection')
 
-const collection = db.collection('library')
+require('./mongoose_connection')
+const Book = require('./models/bookSchema')
 
 const app = express();
 
@@ -14,8 +14,7 @@ app.get("/", async(req, res) => {
   console.log(req.method);
   console.log(req.url);
   console.log(req.query);
-  const cursor = collection.find()
-  const results = await cursor.toArray()
+  const results = await Book.find()
   res.json(results);
 });
 
