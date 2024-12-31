@@ -33,6 +33,11 @@ async function getAllBooks (req, res) {
     console.log(req.body);
   
     try {
+
+      if(req.body.publishedDate){
+        const date = new Date(req.body.publishedDate);
+        req.body.publishedDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+      }
   
       const newBook = new Book(req.body);
       const book = await newBook.save();
@@ -55,7 +60,12 @@ async function getAllBooks (req, res) {
   
   
     try {
-    
+      
+      if(req.body.publishedDate){
+        const date = new Date(req.body.publishedDate);
+        req.body.publishedDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+      }
+
       let updatedBook = await Book.findOneAndUpdate(
         {title: req.params.title},
         req.body,
