@@ -1,33 +1,37 @@
 const mongoose = require("mongoose");
 
-const BookSchema = mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Title is required"],
-    trim: true,
-  },
-  author: { type: String, required: [true, "Author is required"] },
-  publishedDate: {
-    type: Date,
-    validate: {
-      validator: (value) => value <= new Date(),
+const BookSchema = mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Title is required"],
+      trim: true,
     },
-    default: Date.now,
+    price: {
+      type: Number,
+      required: true,
+      min: [0, "Price must be a positive number"],
+    },
+    authors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Author" }],
+    genres: {
+      type: [String],
+      enum: [
+        "Fiction",
+        "Non-Fiction",
+        "Science",
+        "History",
+        "Biography",
+        "Other",
+      ],
+      default: "Other",
+    },
+    publicationYear: {
+      type: Number,
+      required: [true, "Publication year is required"],
+    },
   },
-  genre: {
-    type: String,
-    enum: [
-      "Fiction",
-      "Non-Fiction",
-      "Science",
-      "History",
-      "Biography",
-      "Other",
-    ],
-    default: "Other",
-  },
-  price: { type: Number, min: [0, "Price must be a positive number"] },
-});
+  { timestamps: true }
+);
 
 const Book = mongoose.model("Book", BookSchema);
 
