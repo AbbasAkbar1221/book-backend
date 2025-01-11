@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require('validator')
 
 const UserSchema = mongoose.Schema(
   {
@@ -12,13 +13,6 @@ const UserSchema = mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
       lowercase: true,
-      // validate: function (v) {
-      //   const atSymbolIdx = v.indexOf("@");
-      //   const dotIdx = v.lastIndexOf(".");
-      //   return (
-      //     atSymbolIdx > 0 && atSymbolIdx + 1 < dotIdx && dotIdx < v.length - 1
-      //   );
-      // },
       validate: {
         validator: validator.isEmail,
         message: "Please provide a valid email address.",

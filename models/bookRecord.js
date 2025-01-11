@@ -28,6 +28,7 @@ const BorrowRecordSchema = mongoose.Schema(
         },
         message: "Return date must be after borrow date.",
       },
+      default: null
     },
   },
   { timestamps: true }
