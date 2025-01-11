@@ -21,12 +21,13 @@ app.get("/", async(req, res) => {
 
 const bookRouter = require("./routes/books");
 const authorRouter = require("./routes/author")
-const userrRouter = require("./routes/users")
+const userRouter = require("./routes/users")
+const borrowRecordRouter = require("./routes/borrowRecord")
 
 app.use("/books", bookRouter);
 app.use("/authors", authorRouter);
-app.use("/users", userrRouter);
-
+app.use("/users", userRouter);
+app.use("/borrow-records", borrowRecordRouter);
 
 
 const PORT = process.env.PORT;
