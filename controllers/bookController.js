@@ -2,10 +2,6 @@ const Book = require('../models/bookSchema')
 const Author = require('../models/author')
 
 async function getAllBooks (req, res) {
-    console.log(req.method);
-    console.log(req.url);
-    console.log(req.query);
-  
     try {
       const books = await Book.find().populate("authors", "name nationality");
       res.json(books);
@@ -17,10 +13,6 @@ async function getAllBooks (req, res) {
   }
 
   async function getBookById(req, res) {
-    console.log(req.method);
-    console.log(req.url);
-    console.log("Fetching:", req.params.id);
-    console.log(req.query);
     try {
       const book = await Book.findById(req.params.id).populate("authors", 'name dateOfBirth nationality');
       res.json(book);

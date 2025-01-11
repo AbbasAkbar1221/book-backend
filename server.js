@@ -20,7 +20,10 @@ app.get("/", async(req, res) => {
 
 
 const bookRouter = require("./routes/books");
+const authorRouter = require("./routes/author")
+
 app.use("/books", bookRouter);
+app.use("/authors", authorRouter);
 
 
 const PORT = process.env.PORT;
