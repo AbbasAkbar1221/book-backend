@@ -2,16 +2,21 @@ const Author = require('../models/author')
 
 async function getAuthors(req, res){
     try {
-      const authors = await Author.find().populate(
-        "books",
-        "title price genres publicationYear"
-      );
-      res.json(authors);
+      return res.json(res.paginatedResults);
     } catch (error) {
       res
         .status(500)
         .json({ message: "Unable to fetch authors from the database" });
     }
+}
+
+async function filterAuthors(req, res, next){
+  const authors = await Author.find().populate(
+    "books",
+    "title price genres publicationYear"
+  );
+  req.paginationResource = authors;
+  next();
 }
 
 async function addAuthor(req, res){
@@ -40,5 +45,6 @@ async function addAuthor(req, res){
   module.exports = {
     getAuthors,
     addAuthor,
-    getAuthorById
+    getAuthorById,
+    filterAuthors
   }

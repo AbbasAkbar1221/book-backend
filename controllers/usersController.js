@@ -4,13 +4,18 @@ const BorrowRecord = require("../models/bookRecord");
 
 async function getUsers(req, res) {
   try {
-    const users = await User.find();
-    res.json(users);
+    return res.json(res.paginatedResults);
   } catch (error) {
     res
       .status(500)
       .json({ message: "Unable to fetch authors from the database" });
   }
+}
+
+async function filterUsers(req, res, next){
+  const users = await User.find();
+  req.paginationResource = users;
+  next();
 }
 
 async function addUser(req, res) {
@@ -96,4 +101,5 @@ module.exports = {
   addUser,
   borrowBook,
   returnBorrowedBook,
+  filterUsers,
 };

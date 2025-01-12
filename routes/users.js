@@ -6,10 +6,12 @@ const {
     getUsers,
     addUser,
     borrowBook,
-    returnBorrowedBook
-  } = require('../controllers/usersController')
+    returnBorrowedBook,
+    filterUsers
+  } = require('../controllers/usersController');
+const { paginate } = require('../middleware/pagination');
 
-router.get('/', getUsers);
+router.get('/', filterUsers, paginate, getUsers);
 
 router.post('/', addUser);
 

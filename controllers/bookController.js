@@ -3,13 +3,18 @@ const Author = require("../models/author");
 
 async function getAllBooks(req, res) {
   try {
-    const books = await Book.find().populate("authors", "name nationality");
-    res.json(books);
+    return res.json(res.paginatedResults);
   } catch (error) {
     res
       .status(500)
       .json({ message: "Unable to fetch books from the database" });
   }
+}
+
+async function filterBooks(req, res, next){
+  const books = await Book.find().populate("authors", "name nationality");
+  req.paginationResource = books;
+  next();
 }
 
 async function getBookById(req, res) {
@@ -68,4 +73,5 @@ module.exports = {
   getAllBooks,
   getBookById,
   postBookData,
+  filterBooks,
 };
