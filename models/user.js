@@ -8,6 +8,10 @@ const UserSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    password: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -17,6 +21,12 @@ const UserSchema = mongoose.Schema(
         validator: validator.isEmail,
         message: "Please provide a valid email address.",
       },
+    },
+    role:{
+      type: String,
+      enum: ['admin', 'user'],
+      default: 'user',
+      required: true,
     },
     borrowedBooks: [
       {

@@ -30,6 +30,10 @@ app.use("/users", userRouter);
 app.use("/borrow-records", borrowRecordRouter);
 
 
+app.get("/", (req,res)=>{
+  res.json({message: "Hello Everyone"});
+})
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
