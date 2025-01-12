@@ -3,36 +3,29 @@ dotenv.config();
 
 const express = require("express");
 
-require('./mongoose_connection')
-const Book = require('./models/bookSchema')
+require("./mongoose_connection");
+const {authenticateToken} = require('./middleware/auth')
 
 const app = express();
 
 app.use(express.json());
+app.use(authenticateToken)
 
-app.get("/", async(req, res) => {
-  console.log(req.method);
-  console.log(req.url);
-  console.log(req.query);
-  const results = await Book.find()
-  res.json(results);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello Everyone" });
 });
 
-
 const bookRouter = require("./routes/books");
-const authorRouter = require("./routes/author")
-const userRouter = require("./routes/users")
-const borrowRecordRouter = require("./routes/borrowRecord")
+const authorRouter = require("./routes/author");
+const userRouter = require("./routes/users");
+const borrowRecordRouter = require("./routes/borrowRecord");
 
 app.use("/books", bookRouter);
 app.use("/authors", authorRouter);
 app.use("/users", userRouter);
 app.use("/borrow-records", borrowRecordRouter);
 
-
-app.get("/", (req,res)=>{
-  res.json({message: "Hello Everyone"});
-})
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

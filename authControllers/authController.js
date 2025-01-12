@@ -79,12 +79,12 @@ async function loginUser(req, res) {
 
   function generateToken(data) {
     return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "2h",
+      expiresIn: "2m",
     });
   }
 
   module.exports = {
     registerUser,
     generateAccessToken,
-    loginUser
+    loginUser,
   }
