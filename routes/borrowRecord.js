@@ -3,9 +3,14 @@ const express = require('express')
 const router = express.Router();
 
 const {
-    getBorrowRecords
+    getBorrowRecords,
+    getSpecificRecords
   } = require('../controllers/recordController')
 
-router.get('/', getBorrowRecords);
+  const {authRole} = require('../middleware/auth')
+
+router.get('/', authRole('admin'), getBorrowRecords);
+
+router.get('/id', getSpecificRecords)
 
 module.exports = router

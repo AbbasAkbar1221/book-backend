@@ -66,7 +66,7 @@ async function loginUser(req, res) {
       return res.status(500).json({ message: error.message });
     }
   
-    const userInfo = { email: user.email };
+    const userInfo = { email: user.email, role: user.role };
     const token_data = { userInfo };
   
     const token = generateToken(token_data);
@@ -79,7 +79,7 @@ async function loginUser(req, res) {
 
   function generateToken(data) {
     return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "2m",
+      expiresIn: "1h",
     });
   }
 

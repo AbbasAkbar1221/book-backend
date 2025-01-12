@@ -7,12 +7,13 @@ const {
   getBookById,
   postBookData,
 } = require("../controllers/bookController");
+const { authRole } = require("../middleware/auth");
 
 
 router.get("/", getAllBooks);
 
 router.get("/:id", getBookById);
 
-router.post("/", postBookData);
+router.post("/", authRole('admin'), postBookData);
 
 module.exports = router;

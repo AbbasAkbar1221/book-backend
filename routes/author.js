@@ -7,10 +7,11 @@ const {
   addAuthor,
   getAuthorById,
 } = require("../controllers/authorController");
+const { authenticateToken, authRole } = require("../middleware/auth");
 
 router.get("/", getAuthors);
 
-router.post("/", addAuthor);
+router.post("/", authenticateToken, authRole('admin'), addAuthor);
 
 router.get("/:id", getAuthorById);
 

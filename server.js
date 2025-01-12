@@ -9,6 +9,10 @@ const {authenticateToken} = require('./middleware/auth')
 const app = express();
 
 app.use(express.json());
+
+const authorRouter = require("./routes/author");
+app.use("/authors", authorRouter);
+
 app.use(authenticateToken)
 
 
@@ -17,12 +21,10 @@ app.get("/", (req, res) => {
 });
 
 const bookRouter = require("./routes/books");
-const authorRouter = require("./routes/author");
 const userRouter = require("./routes/users");
 const borrowRecordRouter = require("./routes/borrowRecord");
 
 app.use("/books", bookRouter);
-app.use("/authors", authorRouter);
 app.use("/users", userRouter);
 app.use("/borrow-records", borrowRecordRouter);
 
